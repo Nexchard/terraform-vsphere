@@ -1,0 +1,17 @@
+---
+instance-id: "${local_hostname}"
+local-hostname: "${local_hostname}"
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    eth0:
+      dhcp4: no
+      addresses:
+        - "${ipv4_address}/${ipv4_netmask}"
+      gateway4: "${ipv4_gateway}"
+      nameservers:
+        addresses:
+%{ for server in dns_servers ~}
+          - "${server}"
+%{ endfor ~}

@@ -1,0 +1,32 @@
+#cloud-config
+users:
+  - default
+  - name: ${linux_username}
+    primary_group: users
+    shell: /bin/bash
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    groups: sudo
+    lock_passwd: false
+    passwd: ${linux_admin_password}
+    ssh_authorized_keys:
+      - ${ssh_public_key}
+
+
+# 使用 growpart 模块进行分区扩展
+growpart:
+  mode: auto
+  ignore_growroot_disabled: false
+
+# 执行LVM相关命令扩展逻辑卷
+runcmd:
+  # 自动扩展根分区和文件系统
+  # 扩展物理分区
+  - [sudo, growpart, /dev/sda, 3]
+  # 物理卷识别新空间
+  - [sudo, pvresize, /dev/sda3]
+  # 将新增空间分配给需要的逻辑卷
+  - [sudo, lvextend, -l, +100%FREE, /dev/mapper/sysvg-lv_root]
+  - [sudo, xfs_growfs, /dev/mapper/sysvg-lv_root]
+
+
+# Additional configurations can be added here

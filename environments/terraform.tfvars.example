@@ -1,0 +1,16 @@
+# 示例 vSphere 连接配置
+vsphere_server       = "your-vsphere-server.example.com"
+vsphere_user         = "administrator@vsphere.local"
+vsphere_password     = "your-password-here"
+allow_unverified_ssl = true
+
+# 数据中心配置
+datacenter = "Datacenter"
+cluster    = "Cluster"
+datastore  = "datastore1"
+default_network    = "VM Network"
+default_folder      = "temp"
+
+
+# 内容库设置
+content_library_name = "templates"
