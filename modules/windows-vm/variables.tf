@@ -27,7 +27,7 @@ variable "additional_disks" {
   type = map(object({
     size             = number
     thin_provisioned = optional(bool, true)
-    disk_mode        = optional(string, "persistent")
+    disk_mode        = optional(string, "independent_persistent")  # 磁盘模式: persistent(从属), independent_persistent(独立持久), independent_nonpersistent(独立非持久)
   }))
   default = {}
 }
@@ -71,9 +71,9 @@ variable "windows_admin_password" {
 }
 
 variable "vm_timezone" {
-  description = "Windows timezone"
-  type        = string
-  default     = "China Standard Time"
+  description = "Windows timezone (numeric index)"
+  type        = number
+  default     = 210  # Beijing, Chongqing, Hong Kong, Urumqi (UTC+8)
 }
 
 variable "vm_ipv4_address" {

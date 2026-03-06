@@ -46,6 +46,7 @@ resource "vsphere_virtual_machine" "vm" {
       windows_options {
         computer_name  = var.vm_name
         admin_password = var.windows_admin_password
+        time_zone      = var.vm_timezone
       }
 
       dynamic "network_interface" {
